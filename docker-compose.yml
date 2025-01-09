@@ -24,6 +24,9 @@ services:
     environment:
       - spring.datasource.platform=mysql
       - db.num=1
+      #这个地方有两个注意点：
+      #                   1.host要用mysql的容器名称
+      #                   2.数据库的端口是3307:3306的，但是nacos连数据库应该用容器的端口，所以是3306
       - db.url.0=jdbc:mysql://mysql:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
       - db.user=root
       - db.password=123
