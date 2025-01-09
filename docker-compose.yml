@@ -1,0 +1,43 @@
+services:
+  #mysql数据库
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 123
+    restart: always
+    volumes:
+      - ./init/mysql/data:/var/lib/mysql
+      - ./init/mysql/conf:/etc/mysql/conf.d
+      - ./init/mysql/init/hmall.sql:/docker-entrypoint-initdb.d/hmall.sql
+      - ./init/mysql/init/nacos.sql:/docker-entrypoint-initdb.d/nacos.sql
+    networks:
+      - hmall
+
+
+  nacos:
+    image: nacos/nacos-server:v2.1.0-slim
+    container_name: nacos
+    environment:
+      - spring.datasource.platform=mysql
+      - db.num=1
+      - db.url.0=jdbc:mysql://mysql:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+      - db.user=root
+      - db.password=123
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    restart: always
+    networks:
+      - hmall
+    depends_on:
+      - mysql
+
+#新创建一个网络
+networks:
+  hmall:
+    driver: bridge
