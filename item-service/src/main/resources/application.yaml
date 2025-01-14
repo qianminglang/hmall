@@ -8,7 +8,7 @@ hm:
     title: 购物车服务接口文档
     package: com.hmall.item.controller
   db:
-    database: hm-item
+    database: hmall
 spring:
   cloud:
     sentinel:

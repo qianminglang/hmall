@@ -19,7 +19,7 @@ services:
 
 
   nacos:
-    image: nacos/nacos-server:v2.1.0-slim
+    image: nacos/nacos-server:v2.1.0
     container_name: nacos
     environment:
       - spring.datasource.platform=mysql

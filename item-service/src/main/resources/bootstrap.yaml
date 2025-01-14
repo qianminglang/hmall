@@ -2,14 +2,25 @@ spring:
   application:
     name: item-service # 服务名称
   profiles:
-    active: dev
+    active: local
   cloud:
     nacos:
-      server-addr: 192.168.145.128:8848 # nacos地址
       config:
-        file-extension: yaml # 文件后缀名
-        shared-configs: # 共享配置
-          - dataId: shared-jdbc.yaml # 共享mybatis配置
-          - dataId: shared-log.yaml # 共享日志配置
-          - dataId: shared-swagger.yaml # 共享日志配置
-          - dataId: shared-seata.yaml # 共享日志配置
+        server-addr: localhost:8848 # nacos地址
+        #注意这里的namespace取的id，而不是名称
+        namespace: 90674738-7825-4332-825a-85360e2d0017
+        username: nacos
+        password: nacos
+        shared-configs:
+           - data-id: shared-jdbc.yaml
+             #注意namespace下面的group不会继承到这里，shared-configs下面还是需要指定group的
+             group: hmall
+           - data-id: shared-log.yaml # 共享日志配置
+             #注意namespace下面的group不会继承到这里，shared-configs下面还是需要指定group的
+             group: hmall
+           - data-id: shared-swagger.yaml # 共享日志配置
+             #注意namespace下面的group不会继承到这里，shared-configs下面还是需要指定group的
+             group: hmall
+           - data-id: shared-seata.yaml # 共享日志配置
+             #注意namespace下面的group不会继承到这里，shared-configs下面还是需要指定group的
+             group: hmall

@@ -2,16 +2,16 @@ package com.hmall.item.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hmall.common.config.utils.BeanUtils;
 import com.hmall.common.domain.PageDTO;
 import com.hmall.common.domain.PageQuery;
-import com.hmall.common.config.utils.BeanUtils;
 import com.hmall.item.domain.dto.ItemDTO;
 import com.hmall.item.domain.dto.OrderDetailDTO;
 import com.hmall.item.domain.po.Item;
 import com.hmall.item.service.IItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +19,11 @@ import java.util.List;
 @Api(tags = "商品管理相关接口")
 @RestController
 @RequestMapping("/items")
-@RequiredArgsConstructor
 public class ItemController {
 
-    private final IItemService itemService;
+    @Autowired
+    private  IItemService itemService;
+
 
     @ApiOperation("分页查询商品")
     @GetMapping("/page")
