@@ -38,12 +38,19 @@ public class IndexTest {
     }
 
     /***
-     * 创建索引
+     * 如果存在索引库则删除，不存在则创建
      **/
     @Test
     public void createIndex() throws IOException {
+        String indexName="items";
+        GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
+        boolean exists = restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
+        if(exists){
+            DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
+            restHighLevelClient.indices().delete(deleteIndexRequest,RequestOptions.DEFAULT);
+        }
         //创建request请求对象
-        CreateIndexRequest createIndexRequest = new CreateIndexRequest("items");
+        CreateIndexRequest createIndexRequest = new CreateIndexRequest(indexName);
         //准备请求参数
         createIndexRequest.source(FileUtil.readResourceFileToStr("/es/item_index.json"), XContentType.JSON);
         //发送请求
